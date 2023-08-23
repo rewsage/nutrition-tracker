@@ -34,6 +34,7 @@ export default function Home() {
 					onCategoryPick={(category) => {
 						setFilterParams((prev) => (prev !== category ? category : null));
 					}}
+					activeCategory={filterParams ?? ""}
 					onSortChange={(sortBy) => setSortParams(sortBy)}
 					sortBy={sortParams}
 				/>

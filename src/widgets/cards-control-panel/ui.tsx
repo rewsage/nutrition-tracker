@@ -7,12 +7,14 @@ interface Props extends StackProps {
 	onCategoryPick: (category: string) => void;
 	onSortChange: (sortBy: SortByTime) => void;
 	sortBy: SortByTime;
+	activeCategory: string;
 }
 
 export function CardsControlPanel({
 	onCategoryPick,
 	onSortChange,
 	sortBy,
+	activeCategory,
 	...props
 }: Props) {
 	return (
@@ -22,7 +24,10 @@ export function CardsControlPanel({
 			justifyContent="space-between"
 			alignItems="center"
 			{...props}>
-			<MealFilter onCategoryPick={onCategoryPick} />
+			<MealFilter
+				onCategoryPick={onCategoryPick}
+				activeCategory={activeCategory}
+			/>
 			<MealSort onSortChange={onSortChange} sortBy={sortBy} />
 		</Stack>
 	);
