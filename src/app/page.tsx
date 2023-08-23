@@ -18,8 +18,13 @@ export default function Home() {
 
 	const foodItems = getFoodItems();
 
-	const sortedFood = sortFoodItems(sortParams, foodItems);
-	const filteredFoodItems = filterFoodItems(filterParams, sortedFood);
+	const sortedFood = useMemo(() => {
+		return sortFoodItems(sortParams, foodItems);
+	}, [sortParams, foodItems]);
+
+	const filteredFoodItems = useMemo(() => {
+		return filterFoodItems(filterParams, sortedFood);
+	}, [filterParams, sortedFood]);
 
 	return (
 		<Container sx={{ minHeight: "100vh" }}>
