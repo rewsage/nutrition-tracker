@@ -5,7 +5,7 @@ interface BasicDateProps extends TypographyProps {
 }
 
 export function BasicDate({ date, ...props }: BasicDateProps) {
-	const dateObj = new Date(date);
+	const dateObj = Date.parse(date);
 	const formatter = new Intl.DateTimeFormat("ru");
 
 	return (
