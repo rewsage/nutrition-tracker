@@ -1,70 +1,35 @@
-import { useState } from "react";
-
-import { ExpandLess } from "@mui/icons-material";
-import { styled } from "@mui/material";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent, SelectProps } from "@mui/material/Select";
+import { SelectChangeEvent } from "@mui/material/Select";
 
-const StyledSelect = styled((props: SelectProps) => (
-	<Select
-		IconComponent={ExpandLess}
-		MenuProps={{
-			sx: {
-				"& .MuiPaper-root": {
-					borderRadius: 2,
-				},
-				"& .MuiMenuItem-root": {
-					px: 2,
-					py: 1.5,
-				},
-				"& .MuiList-root": {
-					p: 0,
-				},
-			},
-			anchorOrigin: {
-				vertical: "bottom",
-				horizontal: "right",
-			},
-			transformOrigin: {
-				vertical: "top",
-				horizontal: "right",
-			},
-		}}
-		{...props}
-	/>
-))(({ theme }) => ({
-	"& .MuiOutlinedInput-notchedOutline": {
-		border: "none",
-	},
-}));
+import { BasicSelect } from "@/shared/ui";
+
+import { SortByTime } from "./model";
 
 interface MealSortProps {
-	onSortChange: (sortBy: string) => void;
+	sortBy: SortByTime;
+	onSortChange: (sortBy: SortByTime) => void;
 }
 
-export function MealSort({ onSortChange, ...props }: MealSortProps) {
-	const [sortBy, setSortBy] = useState("newestFirst");
-
+export function MealSort({ sortBy, onSortChange, ...props }: MealSortProps) {
 	const handleChange = (event: SelectChangeEvent<unknown>) => {
 		const value = event.target.value;
-		if (typeof value === "string") {
-			setSortBy(value);
+		if (value === "newestFirst" || value === "oldestFirst") {
 			onSortChange(value);
 		}
 	};
 
 	return (
 		<FormControl>
-			<StyledSelect
-				labelId="demo-simple-select-label"
-				id="demo-simple-select"
+			<BasicSelect
+				labelId="meal-sort-select-label"
+				id="meal-sort-select"
 				value={sortBy}
 				onChange={handleChange}
 				{...props}>
 				<MenuItem value={"newestFirst"}>сначала новые</MenuItem>
 				<MenuItem value={"oldestFirst"}>сначала старые</MenuItem>
-			</StyledSelect>
+			</BasicSelect>
 		</FormControl>
 	);
 }

@@ -1,12 +1,6 @@
-interface FakeData {
-	id: number;
-	title: string;
-	category: string;
-	date: string;
-	imgSrc: string;
-}
+import { FoodData } from "./types";
 
-const fakeData: FakeData[] = [
+const foodData: FoodData[] = [
 	{
 		id: 1,
 		title: "двойная пепперони",
@@ -38,5 +32,5 @@ const fakeData: FakeData[] = [
 ];
 
 export function getFoodItems() {
-	return fakeData;
+	return foodData;
 }

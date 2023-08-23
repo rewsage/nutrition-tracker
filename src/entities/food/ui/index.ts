@@ -1,1 +1,2 @@
-export { FoodCard } from "./card";
+export { FoodCard } from "./organisms";
+export { MealChip } from "./atoms";

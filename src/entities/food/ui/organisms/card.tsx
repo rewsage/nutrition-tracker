@@ -1,6 +1,6 @@
 import { Stack, Typography } from "@mui/material";
 
-import { MealChip } from "@/shared/meal-chip";
+import { MealChip } from "@/entities/food";
 import { BasicDate, MealIcon } from "@/shared/ui";
 
 interface FoodCardProps {

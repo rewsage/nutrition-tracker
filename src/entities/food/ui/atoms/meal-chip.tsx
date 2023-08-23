@@ -1,7 +1,7 @@
 import { Chip, ChipProps, Stack, Typography } from "@mui/material";
 import dictionary from "public/dictionaries/ru.json";
 
-import { inDictionary } from "./lib";
+import { inDictionary } from "@/entities/food/lib";
 
 interface CategoryChipProps extends ChipProps {
 	category: string;

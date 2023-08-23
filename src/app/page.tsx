@@ -1,78 +1,42 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 
-import { Container, Stack, Typography } from "@mui/material";
+import { Container, Stack } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
-import { timeStamp } from "console";
 
 import { FoodCard } from "@/entities/food";
-import { MealFilter } from "@/features/meal-filter";
-import { MealSort } from "@/features/meal-sort";
+import { filterFoodItems } from "@/features/meal-filter";
+import { SortByTime, sortFoodItems } from "@/features/meal-sort";
 import { getFoodItems } from "@/shared/api";
+import { Header } from "@/shared/ui";
+import { CardsControlPanel } from "@/widgets/cards-control-panel";
 
 export default function Home() {
 	const [filterParams, setFilterParams] = useState<string | null>(null);
-	const [sortParams, setSortParams] = useState<string>("newestFirst");
+	const [sortParams, setSortParams] = useState<SortByTime>("newestFirst");
 
 	const foodItems = getFoodItems();
+
 	const sortedItems = useMemo(() => {
-		if (!sortParams) return foodItems;
-
-		return foodItems.sort((a, b) => {
-			const firstTimestamp = Date.parse(a.date);
-			const secondTimestamp = Date.parse(b.date);
-
-			return sortParams === "newestFirst"
-				? secondTimestamp - firstTimestamp
-				: firstTimestamp - secondTimestamp;
-		});
+		return sortFoodItems(sortParams, foodItems);
 	}, [sortParams, foodItems]);
 
-	const categories = useMemo(() => {
-		const categoriesMap = new Map<string, number>();
-
-		for (let i = 0; i < foodItems.length; i++) {
-			const category = foodItems[i].category;
-			const productsNum = categoriesMap.get(category);
-
-			if (productsNum !== undefined) {
-				categoriesMap.set(category, productsNum + 1);
-			} else {
-				categoriesMap.set(category, 1);
-			}
-		}
-
-		return Array.from(categoriesMap.entries());
-	}, [foodItems]);
-
 	const filteredFoodItems = useMemo(() => {
-		if (!filterParams) {
-			return sortedItems;
-		} else {
-			return sortedItems.filter(({ category }) => category === filterParams);
-		}
+		return filterFoodItems(filterParams, sortedItems);
 	}, [filterParams, sortedItems]);
 
 	return (
 		<Container sx={{ minHeight: "100vh" }}>
-			<Typography variant="h4" py={5}>
-				мое приложение
-			</Typography>
+			<Header />
 			<Stack rowGap={2.5}>
-				<Stack
-					direction={{ xs: "column", sm: "row" }}
-					rowGap={2}
-					justifyContent="space-between"
-					alignItems="center">
-					<MealFilter
-						categories={categories}
-						onCategoryPick={(category) => {
-							setFilterParams((prev) => (prev !== category ? category : null));
-						}}
-					/>
-					<MealSort onSortChange={(sortBy) => setSortParams(sortBy)} />
-				</Stack>
+				<CardsControlPanel
+					onCategoryPick={(category) => {
+						setFilterParams((prev) => (prev !== category ? category : null));
+					}}
+					onSortChange={(sortBy) => setSortParams(sortBy)}
+					sortBy={sortParams}
+				/>
 				<Grid container rowSpacing={2} columnSpacing={3}>
 					{filteredFoodItems.map(({ id, ...params }) => {
 						return (
