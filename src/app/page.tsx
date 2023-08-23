@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { Container, Stack } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -18,8 +18,8 @@ export default function Home() {
 
 	const foodItems = getFoodItems();
 
-	const sortedItems = sortFoodItems(sortParams, foodItems);
-	const filteredFoodItems = filterFoodItems(filterParams, sortedItems);
+	const sortedFood = sortFoodItems(sortParams, foodItems);
+	const filteredFoodItems = filterFoodItems(filterParams, sortedFood);
 
 	return (
 		<Container sx={{ minHeight: "100vh" }}>

@@ -8,7 +8,7 @@ export function sortFoodItems(
 ) {
 	if (!sortParams) return foodItems;
 
-	return foodItems.sort((firstItem, secondItem) => {
+	return foodItems.slice().sort((firstItem, secondItem) => {
 		const firstTimestamp = Date.parse(firstItem.date);
 		const secondTimestamp = Date.parse(secondItem.date);
 
