@@ -1,12 +1,12 @@
 import { Stack, StackProps } from "@mui/material";
 
 import { MealFilter } from "@/features/meal-filter";
-import { MealSort, SortByTime } from "@/features/meal-sort";
+import { MealSort, SortType } from "@/features/meal-sort";
 
 interface Props extends StackProps {
 	onCategoryPick: (category: string) => void;
-	onSortChange: (sortBy: SortByTime) => void;
-	sortBy: SortByTime;
+	onSortChange: (sortBy: SortType) => void;
+	sortBy: SortType;
 	activeCategory: string;
 }
 

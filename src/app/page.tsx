@@ -7,14 +7,14 @@ import Grid from "@mui/material/Unstable_Grid2";
 
 import { FoodCard } from "@/entities/food";
 import { filterFoodItems } from "@/features/meal-filter";
-import { SortByTime, sortFoodItems } from "@/features/meal-sort";
+import { SortType, sortFoodItems } from "@/features/meal-sort";
 import { getFoodItems } from "@/shared/api";
 import { Header } from "@/shared/ui";
 import { CardsControlPanel } from "@/widgets/cards-control-panel";
 
 export default function Home() {
 	const [filterParams, setFilterParams] = useState<string | null>(null);
-	const [sortParams, setSortParams] = useState<SortByTime>("newestFirst");
+	const [sortParams, setSortParams] = useState<SortType>("newestFirst");
 
 	const foodItems = getFoodItems();
 

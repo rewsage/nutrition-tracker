@@ -4,17 +4,17 @@ import { SelectChangeEvent } from "@mui/material/Select";
 
 import { BasicSelect } from "@/shared/ui";
 
-import { SortByTime } from "./model";
+import { SortType, sortVariants } from "./model";
 
 interface MealSortProps {
-	sortBy: SortByTime;
-	onSortChange: (sortBy: SortByTime) => void;
+	sortBy: SortType;
+	onSortChange: (sortBy: SortType) => void;
 }
 
 export function MealSort({ sortBy, onSortChange, ...props }: MealSortProps) {
 	const handleChange = (event: SelectChangeEvent<unknown>) => {
 		const value = event.target.value;
-		if (value === "newestFirst" || value === "oldestFirst") {
+		if (typeof value === "string") {
 			onSortChange(value);
 		}
 	};
@@ -27,8 +27,13 @@ export function MealSort({ sortBy, onSortChange, ...props }: MealSortProps) {
 				value={sortBy}
 				onChange={handleChange}
 				{...props}>
-				<MenuItem value={"newestFirst"}>сначала новые</MenuItem>
-				<MenuItem value={"oldestFirst"}>сначала старые</MenuItem>
+				{sortVariants.map(({ sortType, title }, index) => {
+					return (
+						<MenuItem key={index} value={sortType}>
+							{title}
+						</MenuItem>
+					);
+				})}
 			</BasicSelect>
 		</FormControl>
 	);
